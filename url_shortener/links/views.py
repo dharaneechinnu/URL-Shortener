@@ -1,50 +1,19 @@
 from django.shortcuts import get_object_or_404, redirect
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from django.db.models import F
 from .models import Links
-from .serializers import  ShortURLCreateSerializer, ShortURLListSerializer
+from .serializers import   ShortURLListSerializer
 
 
-class CreateShortURLView(CreateAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = ShortURLCreateSerializer
-
-
-class MyUrlsListView(ListAPIView):
+class URLShortenerOperation(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = ShortURLListSerializer
-    
-    def get_queryset(self):
-        print("User:", self.request.user)
-        return Links.objects.filter(user=self.request.user)
-
-
-class URLDetailView(RetrieveAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = ShortURLListSerializer
-
-    def get_queryset(self):
-        return Links.objects.filter(user=self.request.user)
-
-    
-
-
-class URLUpdateView(UpdateAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = ShortURLListSerializer
+    lookup_field = "pk"
     
     def get_queryset(self):
         return Links.objects.filter(user=self.request.user)
-
-
-class URLDeleteView(DestroyAPIView):
-    permission_classes = [IsAuthenticated]
-    
-    def get_queryset(self):
-        return Links.objects.filter(user=self.request.user)
-
 
 class RedirectView(APIView):
     authentication_classes = []
