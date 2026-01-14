@@ -58,7 +58,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'url_shortener.urls'
 
-CORS_allow_all_origins = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 TEMPLATES = [
     {
