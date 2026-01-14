@@ -58,11 +58,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'url_shortener.urls'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8001",
-    "https://localhost:8000"
-]
-
+CORS_allow_all_origins = True
 
 TEMPLATES = [
     {

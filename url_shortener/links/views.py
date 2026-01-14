@@ -18,7 +18,7 @@ class URLShortenerOperation(viewsets.ModelViewSet):
 class RedirectView(APIView):
     authentication_classes = []
     permission_classes = []
-
+    
     def get(self, request, code):
         url = get_object_or_404(Links, short_url=code, is_active=True)
         Links.objects.filter(pk=url.pk).update(clicks=F("clicks") + 1)
