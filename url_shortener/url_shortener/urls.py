@@ -15,10 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
+from links.views import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('Auth/',include('accounts.urls')),
-    path('',include('links.urls')),
+    path('api/accounts/', include('accounts.urls')),
+    path('api/links/', include('links.urls')),
+    # Redirect endpoint at root level for short links
+    path('<str:code>/', RedirectView.as_view(), name='redirect-url'),
 ]
